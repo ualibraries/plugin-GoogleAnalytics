@@ -126,6 +126,3 @@ function googleanalyticserr_append_code()
     echo $js;
     echo '</script>' . "\n";
 }
-
-?>
-
