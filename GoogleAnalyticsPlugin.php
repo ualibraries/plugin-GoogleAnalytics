@@ -32,7 +32,7 @@ class GoogleAnalyticsPlugin extends Omeka_Plugin_AbstractPlugin
     protected $_hooks =array(
         'install',
         'uninstall',
-        'public_theme_footer',
+        'public_footer',
         'config',
         'config_form'
     );
@@ -48,14 +48,14 @@ class GoogleAnalyticsPlugin extends Omeka_Plugin_AbstractPlugin
         delete_option('googleanalytics_version');
         delete_option(GOOGLE_ANALYTICS_ACCOUNT_OPTION);
     }
-    public function hookPublicThemeFooter()
+    public function hookPublicFooter()
     {
         $accountId = get_option(GOOGLE_ANALYTICS_ACCOUNT_OPTION);
         if (empty($accountId)) {
             return;
         }
 
-        $js = file_get_content(GOOGLE_ANALYTICS_PLUGIN_DIR . '/snipet.js');
+        $js = file_get_contents(GOOGLE_ANALYTICS_PLUGIN_DIR . '/snippet.js');
         $html = '<script type="text/javascript">'
               . 'var accountId =' . js_escape($accountId) .';'
               . $js
@@ -67,7 +67,7 @@ class GoogleAnalyticsPlugin extends Omeka_Plugin_AbstractPlugin
     {
         $post = $args['post'];
         set_option(
-            GOOGLE_ANALYTICS_PLUGIN_DIR,
+            GOOGLE_ANALYTICS_ACCOUNT_OPTION,
             $post[GOOGLE_ANALYTICS_ACCOUNT_OPTION]
         );
     }
